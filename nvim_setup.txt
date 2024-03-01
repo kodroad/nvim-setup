@@ -1,0 +1,545 @@
+Установка и настройка терминала kitty.
+
+1.
+Скачиваем на странице
+https://github.com/kovidgoyal/kitty/releases
+
+файл "Linux amd64 binary bundle"
+
+и извлекаем архив в папку ~/bin.
+В итоге в папке ~/bin должна оказаться, например, папка kitty-0.32.1-x86_64, т.е.
+итоговый путь до kitty должен выглядеть как ~/bin/kitty-0.32.1-x86_64.
+Для быстрого запуска kitty можно в настройках оси назначить хоткей, например, Win+R,
+на команду ~/bin/kitty-0.32.1-x86_64/bin/kitty
+
+2.
+Установка шрифта.
+
+На странице:
+https://www.nerdfonts.com/font-downloads
+
+скачиваем шрифт "Agave Nerd Font" (либо другой по вкусу):
+https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Agave.zip
+
+Извлекаем архив, нажимаем два раза на шрифт AgaveNerdFont-Regular.ttf и устанавливаем.
+
+3.
+Настройка kitty.
+
+Открываем в текстовом редакторе файл ~/.config/kitty/kitty.conf и добавляем в начало
+следующий текст:
+font_family      Agave Nerd Font Regular
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+font_size        12.0
+
+shell_integration no-cursor
+
+cursor_blink_interval 0
+
+enable_audio_bell no
+
+resize_in_steps yes
+
+На этом с kitty всё.
+
+--------------------------------------------------------------------------------
+
+Установка nvim (Neovim). Общие сведения.
+
+1.
+Скачиваем на странице
+https://github.com/neovim/neovim/releases/tag/v0.9.4
+
+файл nvim-linux64.tar.gz и извлекаем в папку ~/bin. Итоговый путь должен выглядеть
+как ~/bin/nvim-linux64. Нужно установить именно версию 0.9.4, т.к. конфиг Nvchad,
+который будет настроен дальше, расчитан на эту версию.
+
+2.
+Добавляем nvim в PATH. Для этого в конец файла ~/.profile добавляем строку
+export PATH=$PATH:"$HOME/bin/nvim-linux64/bin"
+
+и выходим и заходим в систему.
+
+Если все сделали верно, то команда nvim --version должна вывести следующее:
+NVIM v0.9.4
+Build type: Release
+LuaJIT 2.1.1692716794
+
+   system vimrc file: "$VIM/sysinit.vim"
+  fall-back for $VIM: "/__w/neovim/neovim/build/nvim.AppDir/usr/share/nvim"
+
+Run :checkhealth for more info
+
+Если после открытия какого-либо файла прямо в редакторе начинают появлятся ошибки
+вида "...invalid node type..." от плагина tree-sitter:
+https://github.com/tree-sitter/tree-sitter
+
+то нужно установить парсер для файлов этого типа. Например, если такие ошибки
+появляются при открытии доков nvim'а (:h lua-guide, например), нужно выполнить
+команду ":TSInstall vimdoc".
+
+--------------------------------------------------------------------------------
+
+Настройка nvim с помощью NvChad.
+
+NvChad - конфиг для nvim, который позволяет относительно быстро приблизить nvim
+к IDE. Фичи можно глянуть тут:
+https://nvchad.com/docs/features
+
+Перед установкой NvChad можно установить npm:
+sudo apt install npm
+
+чтобы сразу же была поддержка языков web разработки (HTML, CSS и т.д.).
+
+Также можно установить команду ripgrep - нечеткий построчный рекурсивный поиск по
+регулярке:
+sudo apt install ripgrep
+
+Эта команда нужна для правильной работы плагина Telescope:
+https://github.com/nvim-telescope/telescope.nvim
+
+Проверить, что ripgrep установился можно командой:
+rg --version
+
+NvChad устанавливаем командой:
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+
+Эта команда скачивает NvChad и сразу же запускает nvim. На вопрос
+Do you want to install example custom config?
+
+отвечаем 'y'.
+
+Удалить NvChad:
+rm -rf ~/.config/nvim
+rm -rf ~/.local/share/nvim
+rm -rf ~/.cache/nvim
+
+Обзор NvChad:
+https://docs.rockylinux.org/books/nvchad/
+
+Ключевые моменты NvChad:
+1.
+Устанавливает большое количество плагинов, которые и приближают nvim к IDE.
+
+Среди них:
+lazy.nvim - менеджер плагинов:
+https://github.com/folke/lazy.nvim
+
+mason.nvim - менеджер для LSP, линтеров, форматеров:
+https://github.com/williamboman/mason.nvim
+
+LSP - Language Server Protocol, позволяет настроить работу с языками
+программирования, привносит такие фичи как автодополнение, переход к
+определению чего-либо и т.д.
+
+2.
+Вся настройка выполняется на языке Lua.
+
+После установки NvChad создает в ~/.config папку nvim со следующей структурой (здесь
+не показаны .<filename> файлы):
+
+~/.config/nvim
+├── init.lua
+├── lazy-lock.json
+├── LICENSE
+└── lua
+    ├── core
+    │   ├── bootstrap.lua
+    │   ├── default_config.lua
+    │   ├── init.lua
+    │   ├── mappings.lua
+    │   └── utils.lua
+    ├── custom
+    │   ├── chadrc.lua
+    │   ├── configs
+    │   │   ├── lspconfig.lua
+    │   │   ├── null-ls.lua
+    │   │   └── overrides.lua
+    │   ├── highlights.lua
+    │   ├── init.lua
+    │   ├── mappings.lua
+    │   ├── plugins.lua
+    │   └── README.md
+    └── plugins
+        ├── configs
+        │   ├── cmp.lua
+        │   ├── lazy_nvim.lua
+        │   ├── lspconfig.lua
+        │   ├── mason.lua
+        │   ├── nvimtree.lua
+        │   ├── others.lua
+        │   ├── telescope.lua
+        │   └── treesitter.lua
+        └── init.lua
+
+Папка ~/.config/nvim является git-репой. При обновлении репы, обновляется все, кроме папки
+~/.config/nvim/lua/custom - эта папка для пользовательских настроек, т.е. содержимое этой
+папки не перетирается после обновления репы (а следовательно и NvChad) и именно в нее
+должны добавляться пользователькие настройки.
+
+Настройки nvim нужно добавлять в файл custom/init.lua. Изначально этот файл пустой (содержит
+только комменты):
+-- local autocmd = vim.api.nvim_create_autocmd
+
+-- Auto resize panes when resizing nvim window
+-- autocmd("VimResized", {
+--   pattern = "*",
+--   command = "tabdo wincmd =",
+-- })
+
+После добавления своих настроек может выглядеть так:
+-- local autocmd = vim.api.nvim_create_autocmd
+
+-- Auto resize panes when resizing nvim window
+-- autocmd("VimResized", {
+--   pattern = "*",
+--   command = "tabdo wincmd =",
+-- })
+
+local g = vim.g
+local opt = vim.opt
+
+g.mapleader = ","
+g.nvim_tree_auto_close = true
+
+-- Indenting
+opt.expandtab = false
+opt.shiftwidth = 4
+opt.smartindent = true
+opt.tabstop = 4
+opt.softtabstop = 0
+
+Дефолтные хоткеи находятся в файле core/mappings.lua. Свои нужно определять в файле
+custom/mappgins.lua. Изначально этот файл выглядит так:
+---@type MappingsTable
+local M = {}
+
+M.general = {
+  n = {
+    [";"] = { ":", "enter command mode", opts = { nowait = true } },
+
+    --  format with conform
+    ["<leader>fm"] = {
+      function()
+        require("conform").format()
+      end,
+      "formatting",
+    }
+
+  },
+  v = {
+    [">"] = { ">gv", "indent"},
+  },
+}
+
+-- more keybinds!
+
+return M
+
+После добавления своих настроек может выглядеть так:
+---@type MappingsTable
+local M = {}
+
+M.general = {
+  n = {
+    [";"] = { ":", "enter command mode", opts = { nowait = true } },
+
+    --  format with conform
+    ["<leader>fm"] = {
+      function()
+        require("conform").format()
+      end,
+      "formatting",
+    },
+
+    ["<A-l>"] = { ":bnext <CR>", "Go to next (right) buffer" },
+    ["<A-h>"] = { ":bprevious <CR>", "Go to previous(left) buffer" },
+    -- Close buffer and not focus on nvim-tree after that.
+    ["<leader>d"] = { ":bprevious | split | bnext | bdelete <CR>", "Close buffer", opts = { nowait = true } },
+    ["<leader>gi"] = { ":FloatermNew --height=1.0 --width=1.0 --title=lazygit --position=topleft lazygit <CR>" },
+  },
+  v = {
+    [">"] = { ">gv", "indent"},
+  },
+}
+
+-- more keybinds!
+
+return M
+
+При настройке хоткеев приняты следующие сокращения:
+C - ctrl
+A - alt
+S - shift
+leader - символ лидер, изначально равен пробелу, в custom/init.lua переназначен на ','.
+
+С учетом изменений в custom/init.lua и custom/mappings.lua основные хоткеи такие:
+,th - выбор темы. Тема сохраняется и после закрытия nvim.
+C-n - показать/скрыть nvim-tree - проводник. Показать все хоткеи: g? при активном nvim-tree.
+C-h - перейти на nvim-tree с любого буфера.
+C-l - перейти обратно с nvim-tree на предыдущий буфер.
+A-h - перейти на буфер слева.
+A-l - перейти на буфер справа.
+
+Остальные хоткеи можно увидеть, набрав команду :NvCheetsheet.
+
+--------------------------------------------------------------------------------
+
+Работа с плагинами в nvim с NvChad'ом.
+
+Менеджер плагинов можно вызвать командой :Lazy. Работает она благодаря плагину
+https://github.com/folke/lazy.nvim
+
+который был установлен NvChad'ом.
+В появившемся окне можно увидеть установленные плагины, какие плагины загружены и т.д.
+Чтобы установить новый плагин нужно сначала в файл
+~/.config/nvim/lua/custom/plugins.lua
+
+добавить этот плагин. Например, для установки плагина
+https://github.com/natecraddock/workspaces.nvim
+
+нужно добавить в конец файла
+~/.config/nvim/lua/custom/plugins.lua
+
+следующие строки:
+
+  {
+    "natecraddock/workspaces.nvim",
+	lazy = false,
+    config = function()
+      require("workspaces").setup()
+    end,
+  },
+
+После сохранения, запускаем nvim, если мы еще не были в нем и выполняем команду
+:Lazy и нажимаем I, чтобы установить плагин. После этого закрываем и открываем
+nvim снова.
+
+Для удаления плагина, удаляем строчки касательно нашего плагина из файла
+~/.config/nvim/lua/custom/plugins.lua
+
+запускаем nvim, :Lazy и нажимаем X.
+
+--------------------------------------------------------------------------------
+
+Настройка nvim под Go.
+
+1.
+Устанавливаем LSP сервер для Go - gopls. Для этого в файле
+~/.config/nvim/lua/custom/configs/overrides.lua
+
+в конец блока
+M.mason = {
+  ensure_installed = {
+
+добавляем gopls. После добавления этот блок должен выглядеть примерно так:
+M.mason = {
+  ensure_installed = {
+    -- lua stuff
+    "lua-language-server",
+    "stylua",
+
+    -- web dev stuff
+    "css-lsp",
+    "html-lsp",
+    "typescript-language-server",
+    "deno",
+    "prettier",
+
+    -- c/cpp stuff
+    "clangd",
+    "clang-format",
+
+	"gopls",
+  },
+}
+
+Mason - это плагин для nvim - менеджер LSP, линтеров, форматеров. Команда
+:Mason позволяет увидеть состояние LSP и т.д.
+После этого выходим и заходим в nvim и выполняем команду :MasonInstallAll.
+Эта команда установит gopls.
+
+Далее чтобы gopls реально начал работать для go-файлов, в файле
+~/.config/nvim/lua/custom/configs/lspconfig.lua
+
+переменную servers дополняем gopls, т.е. после дополнения она должна выглядеть примерно так:
+local servers = { "html", "cssls", "tsserver", "clangd", "gopls" }
+
+Закрываем и открываем nvim, проверяем, что в go-файлах работают языковые фичи.
+
+2.
+Для настройки форматеров goimports (автоматический импорт пакетов) и
+gofumpt (собственно форматирование) делаем следующее.
+
+Сначала командой :Mason открываем плагин Mason, переходим на вкладку Formatter
+(нажимаем 5), находим и устанавливаем goimports и gofumpt (становимся на строчки
+с названием этим форматеров и нажимаем i).
+
+Далее в файле
+~/.config/nvim/lua/custom/configs/conform.lua
+
+добавляем наши форматеры в раздел formatters_by_ft и раскоментируем раздел
+format_on_save. После всех манипуляций файл conform.lua должен выглядеть так:
+--type conform.options
+local options = {
+	lsp_fallback = true,
+
+	formatters_by_ft = {
+		lua = { "stylua" },
+
+		javascript = { "prettier" },
+		css = { "prettier" },
+		html = { "prettier" },
+
+		sh = { "shfmt" },
+
+		go = { "goimports", "gofumpt" },
+	},
+
+  -- adding same formatter for multiple filetypes can look too much work for some
+  -- instead of the above code you could just use a loop! the config is just a table after all!
+
+	format_on_save = {
+	  -- These options will be passed to conform.format()
+	  timeout_ms = 500,
+	  lsp_fallback = true,
+	},
+}
+
+require("conform").setup(options)
+
+После этого в файле
+~/.config/nvim/lua/custom/plugins.lua
+
+находим раздел для плагина stevearc/conform.nvim и раскоментируем строку
+event = "BufWritePre",
+
+чтобы наши форматеры работали каждый раз после сохранения файла. Плагин
+stevearc/conform.nvim после настройки должен выглядеть так:
+{
+  "stevearc/conform.nvim",
+  --  for users those who want auto-save conform + lazyloading!
+  event = "BufWritePre",
+  config = function()
+    require "custom.configs.conform"
+  end,
+},
+
+3.
+Настройка линтера.
+
+Выполняем команду :Mason, находим golangci-lint и устанавливаем его.
+
+После этого в конец файла
+~/.config/nvim/lua/custom/plugins.lua
+
+добавляем плагин nvim-lint:
+  {
+    "mfussenegger/nvim-lint",
+    lazy = false,
+    config = function()
+      require("lint").linters_by_ft = {
+        go = { "golangcilint" },
+      }
+  
+      local golangcilint = require("lint").linters.golangcilint
+      golangcilint.args = {
+        "run",
+        "--out-format",
+        "json",
+      }
+
+      -- Show linter name in a diagnostic message.
+      local ns = require("lint").get_namespace "golangcilint"
+      vim.diagnostic.config({ virtual_text = { source = true } }, ns)
+    end,
+  },
+
+После сохранения, запускаем nvim, если мы еще не были в нем и выполняем команду
+:Lazy и нажимаем I, чтобы установить плагин. После этого закрываем и открываем
+nvim снова.
+
+Затем в файле  
+~/.config/nvim/lua/custom/init.lua
+
+добавляем следующее, чтобы линт отработал на текущем буфере после его сохранения:
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
+})
+
+golangci-lint после запуска пытается найти один из файлов
+.golangci.yml 
+.golangci.yaml
+.golangci.toml
+.golangci.yml
+
+начиная с текущей папки и поднимаясь до корня. В этом файле хранятся настройки линта.
+Посмотреть где этот файл был найден можно командой вроде этой:
+
+~/.local/share/nvim/mason/bin/golangci-lint run -v ./...
+
+В логи должно быть выведено подобное сообщение:
+INFO [config_reader] Used config file ../.golangci.yml
+
+--------------------------------------------------------------------------------
+
+Настройка git.
+
+Для удобной работы с git необходимо установить плагин
+https://github.com/voldikss/vim-floaterm
+
+для управления плавающими терминалами, а также приложения командной строки lazygit и delta:
+https://github.com/jesseduffield/lazygit/releases/download/v0.40.2/lazygit_0.40.2_Linux_x86_64.tar.gz
+https://github.com/dandavison/delta/releases/download/0.16.5/delta-0.16.5-x86_64-unknown-linux-gnu.tar.gz
+
+lazygit - это и есть программа для работы с git репами, delta - это утилита для более удобного
+отображения разницы файлов (diff). И lazygit и delta должны быть в PATH.
+
+Плагин устанавлиаем добавлением в конец файла
+~/.config/nvim/lua/custom/plugins.lua
+
+блока:
+  {
+    "voldikss/vim-floaterm",
+    lazy = false,
+  },
+
+перезапускаем nvim, чтобы плагин установился.
+
+Далее настраиваем lazygit. Для этого в файл
+~/.config/lazygit/config.yml
+
+добавляем следующие настройки
+gui:
+  sidePanelWidth: 0.15
+  showCommandLog: false
+  showBottomLine: false
+  nerdFontsVersion: '3'
+  theme:
+    selectedLineBgColor:
+      - underline
+    selectedRangeBgColor:
+      - underline
+
+git:
+  paging:
+    colorArg: never
+    pager: delta --dark --paging=never --side-by-side --syntax-theme=gruvbox-dark --wrap-max-lines 0
+
+Чтобы показать/скрыть окно c lazygit по нажатию комбинации Alt-m в файле
+~/.config/nvim/lua/custom/init.lua
+
+добавляем следующее:
+vim.api.nvim_create_autocmd("VimEnter", {
+  command = "FloatermNew --silent --name=lazygit-floaterm --height=1.0 --width=1.0 --title=lazygit --position=topleft lazygit",
+})
+vim.keymap.set("n", "<A-m>", function()
+  vim.cmd "FloatermToggle lazygit-floaterm"
+end)
+vim.keymap.set("t", "<A-m>", function()
+  vim.cmd "FloatermToggle lazygit-floaterm"
+end)
