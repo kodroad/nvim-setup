@@ -12,6 +12,11 @@ https://github.com/kovidgoyal/kitty/releases
 Для быстрого запуска kitty можно в настройках оси назначить хоткей, например, Win+R,
 на команду ~/bin/kitty-0.32.1-x86_64/bin/kitty
 
+После установки можно выбрать тему, выполнив команды
+kitten themes
+
+из терминала kitty.
+
 2.
 Установка шрифта.
 
@@ -22,6 +27,9 @@ https://www.nerdfonts.com/font-downloads
 https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Agave.zip
 
 Извлекаем архив, нажимаем два раза на шрифт AgaveNerdFont-Regular.ttf и устанавливаем.
+
+Установить шрифт можно также, скопировав его в папку ~/.fonts и выполнив команду
+fc-cache -f -v
 
 3.
 Настройка kitty.
@@ -436,26 +444,26 @@ stevearc/conform.nvim после настройки должен выгляде�
 ~/.config/nvim/lua/custom/plugins.lua
 
 добавляем плагин nvim-lint:
-  {
-    "mfussenegger/nvim-lint",
-    lazy = false,
-    config = function()
-      require("lint").linters_by_ft = {
-        go = { "golangcilint" },
-      }
-  
-      local golangcilint = require("lint").linters.golangcilint
-      golangcilint.args = {
-        "run",
-        "--out-format",
-        "json",
-      }
+{
+  "mfussenegger/nvim-lint",
+  lazy = false,
+  config = function()
+    require("lint").linters_by_ft = {
+      go = { "golangcilint" },
+    }
 
-      -- Show linter name in a diagnostic message.
-      local ns = require("lint").get_namespace "golangcilint"
-      vim.diagnostic.config({ virtual_text = { source = true } }, ns)
-    end,
-  },
+    local golangcilint = require("lint").linters.golangcilint
+    golangcilint.args = {
+      "run",
+      "--out-format",
+      "json",
+    }
+
+    -- Show linter name in a diagnostic message.
+    local ns = require("lint").get_namespace "golangcilint"
+    vim.diagnostic.config({ virtual_text = { source = true } }, ns)
+  end,
+},
 
 После сохранения, запускаем nvim, если мы еще не были в нем и выполняем команду
 :Lazy и нажимаем I, чтобы установить плагин. После этого закрываем и открываем
@@ -543,3 +551,27 @@ end)
 vim.keymap.set("t", "<A-m>", function()
   vim.cmd "FloatermToggle lazygit-floaterm"
 end)
+
+--------------------------------------------------------------------------------
+
+Упрощение тестирования.
+
+Для быстрого запуска тестов можно воспользоваться плагином vim-test:
+https://github.com/vim-test/vim-test
+
+Устанавлиаем плагин добавлением в конец файла
+~/.config/nvim/lua/custom/plugins.lua
+
+блока:
+{
+  "vim-test/vim-test",
+  lazy = false,
+},
+
+Хоткеи можно настроить добавляением в файл
+~/.config/nvim/lua/custom/mappings.lua
+
+в раздел M.general следующих настроек:
+["<leader>tn"] = { "<cmd> TestNearest <CR>", "Run the nearest test" },
+["<leader>tf"] = { "<cmd> TestFile <CR>", "Run tests in the current file" },
+["<leader>tl"] = { "<cmd> TestLast <CR>", "Run the last test" },
