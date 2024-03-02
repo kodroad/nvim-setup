@@ -568,7 +568,7 @@ https://github.com/vim-test/vim-test
   lazy = false,
 },
 
-Хоткеи можно настроить добавляением в файл
+Хоткеи можно настроить добавлением в файл
 ~/.config/nvim/lua/custom/mappings.lua
 
 в раздел M.general следующих настроек:
