@@ -1,0 +1,9 @@
+FROM alpine:3.19
+
+RUN apk update --no-check-certificate && \
+    apk add --no-check-certificate git curl wget build-base neovim
+
+RUN git config --global http.sslVerify "false" && \
+    echo insecure >> /root/.curlrc
+
+CMD ["/bin/sh"]
