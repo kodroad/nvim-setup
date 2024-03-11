@@ -1,14 +1,11 @@
 FROM alpine:3.19
 
 RUN apk update && \
-    apk add make openssh git wget curl delta lazygit go build-base unzip gzip ripgrep neovim
+    apk add make openssh git wget curl go build-base unzip gzip ripgrep neovim
 
 # NvChad
-RUN git clone https://github.com/NvChad/NvChad /root/.config/nvim --depth 1
+RUN git clone -b v2.0 https://github.com/NvChad/NvChad /root/.config/nvim --depth 1
 COPY custom /root/.config/nvim/lua/custom
-
-# lazygit config
-COPY lazygit/config.yml /root/.config/lazygit/config.yml
 
 # Go
 ENV GOROOT /usr/lib/go
