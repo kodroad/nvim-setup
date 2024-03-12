@@ -39,6 +39,10 @@ M.nvimtree = {
 			},
 		},
 	},
+
+	filters = {
+		git_ignored = false,
+	},
 }
 
 M.gitsigns = {

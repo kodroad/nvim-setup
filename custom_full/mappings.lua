@@ -28,6 +28,14 @@ M.general = {
 
     -- Diffview
     ["<leader>gd"] = { "<cmd> DiffviewOpen <CR>", "Open Diffview" },
+
+    -- Neogit
+    ["<leader>gg"] = { "<cmd> Neogit <CR>", "Open Neogit" },
+
+    -- Telescope LSP.
+    ["<leader>lr"] = { "<cmd> lua require'telescope.builtin'.lsp_references() <CR>", "Telescope references" },
+    ["<leader>li"] = { "<cmd> lua require'telescope.builtin'.lsp_implementations() <CR>", "Telescope implementations" },
+    ["<leader>ld"] = { "<cmd> lua require'telescope.builtin'.diagnostics() <CR>", "Telescope diagnostics" },
   },
 
   v = {

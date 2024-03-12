@@ -116,7 +116,16 @@ local plugins = {
       "sindrets/diffview.nvim",
       "nvim-telescope/telescope.nvim",
     },
-    config = true,
+    config = function()
+      require("neogit").setup {
+        mappings = {
+          status = {
+            ["<esc>"] = "Close",
+            ["o"] = "Toggle",
+          },
+        },
+      }
+    end,
   },
 
   -- To make a plugin not be loaded
