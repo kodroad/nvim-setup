@@ -28,6 +28,7 @@ M.general = {
 
     -- Diffview
     ["<leader>gd"] = { "<cmd> DiffviewOpen <CR>", "Open Diffview" },
+    ["<leader>pr"] = { "<cmd> DiffviewOpen origin/HEAD...HEAD --imply-local <CR>", "Open Diffview to review a PR" },
 
     -- Neogit
     ["<leader>gg"] = { "<cmd> Neogit <CR>", "Open Neogit" },
