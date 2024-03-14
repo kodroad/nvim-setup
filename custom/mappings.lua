@@ -40,6 +40,7 @@ M.general = {
 			"Telescope implementations",
 		},
 		["<leader>ld"] = { "<cmd> lua require'telescope.builtin'.diagnostics() <CR>", "Telescope diagnostics" },
+		["<leader>fr"] = { "<cmd> Telescope resume <CR>", "Resume last Telescope session" },
 	},
 
 	v = {

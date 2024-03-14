@@ -6,35 +6,35 @@ local M = {}
 
 ---@type Base46HLGroupsList
 M.override = {
-  Comment = {
-    italic = true,
-  },
+	Comment = {
+		italic = true,
+	},
 
-  DiffAdd = {
-    fg = "NONE",
-    bg = "#004400",
-  },
-  DiffText = {
-    fg = "#000000",
-    bg = "#ffa500",
-  },
-  DiffChange = {
-    fg = "NONE",
-    bg = "#454545",
-  },
-  DiffDelete = {
-    fg = "NONE",
-    bg = "#660000",
-  },
-  DiffRemoved = {
-    fg = "NONE",
-    bg = "#660000",
-  },
+	DiffAdd = {
+		fg = "NONE",
+		bg = "#004400",
+	},
+	DiffText = {
+		fg = "#000000",
+		bg = "#ffa500",
+	},
+	DiffChange = {
+		fg = "NONE",
+		bg = "#454545",
+	},
+	DiffDelete = {
+		fg = "NONE",
+		bg = "#660000",
+	},
+	DiffRemoved = {
+		fg = "NONE",
+		bg = "#660000",
+	},
 }
 
 ---@type HLTable
 M.add = {
-  NvimTreeOpenedFolderName = { fg = "green", bold = true },
+	NvimTreeOpenedFolderName = { fg = "green", bold = true },
 }
 
 return M
