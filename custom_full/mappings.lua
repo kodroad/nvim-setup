@@ -33,10 +33,11 @@ M.general = {
     -- Neogit
     ["<leader>gg"] = { "<cmd> Neogit <CR>", "Open Neogit" },
 
-    -- Telescope LSP.
+    -- Telescope
     ["<leader>lr"] = { "<cmd> lua require'telescope.builtin'.lsp_references() <CR>", "Telescope references" },
     ["<leader>li"] = { "<cmd> lua require'telescope.builtin'.lsp_implementations() <CR>", "Telescope implementations" },
     ["<leader>ld"] = { "<cmd> lua require'telescope.builtin'.diagnostics() <CR>", "Telescope diagnostics" },
+    ["<leader>fr"] = { "<cmd> Telescope resume <CR>", "Resume last Telescope session" },
   },
 
   v = {

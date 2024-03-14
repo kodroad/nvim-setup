@@ -13,15 +13,43 @@ g.mapleader = ","
 g.nvim_tree_auto_close = true
 
 -- Indenting
-opt.expandtab = false
-opt.shiftwidth = 4
-opt.smartindent = true
-opt.tabstop = 4
-opt.softtabstop = 0
+opt.expandtab = false -- when inserting tab by pressing tab key don't replace it with spaces
+opt.shiftwidth = 4 -- tab length when indenting with >> etc.
+opt.tabstop = 4 -- number of spaces that a <Tab> in the file counts for
 opt.wrap = false
 opt.diffopt:append("iwhite")
 opt.fillchars:append({ diff = " " })
 opt.autoread = true
+
+-- YAML indent settings
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "yaml" },
+	callback = function()
+		vim.opt.tabstop = 2
+		vim.opt.shiftwidth = 2
+		vim.opt.expandtab = true
+	end,
+})
+
+-- Python indent settings
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "python" },
+	callback = function()
+		vim.opt.tabstop = 4
+		vim.opt.shiftwidth = 4
+		vim.opt.expandtab = false
+	end,
+})
+
+-- Lua indent settings
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "lua" },
+	callback = function()
+		vim.opt.tabstop = 2
+		vim.opt.shiftwidth = 2
+		vim.opt.expandtab = false
+	end,
+})
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function()
