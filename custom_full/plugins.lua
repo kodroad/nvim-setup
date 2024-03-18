@@ -74,11 +74,6 @@ local plugins = {
   },
 
   {
-    "voldikss/vim-floaterm",
-    lazy = false,
-  },
-
-  {
     "vim-test/vim-test",
     lazy = false,
   },
@@ -122,6 +117,51 @@ local plugins = {
           status = {
             ["<esc>"] = "Close",
             ["o"] = "Toggle",
+          },
+        },
+      }
+    end,
+  },
+
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = {
+      defaults = {
+        mappings = {
+          i = {
+            -- Close Telescope on single Esc press
+            ["<esc>"] = require("telescope.actions").close,
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    opts = function()
+      local opts = require "plugins.configs.cmp"
+      local cmp = require "cmp"
+
+      opts.mapping["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }
+      opts.mapping["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }
+
+      return opts
+    end,
+  },
+
+  {
+    "NvChad/nvterm",
+    config = function()
+      require("nvterm").setup {
+        terminals = {
+          type_opts = {
+            float = {
+              row = 0.2,
+              col = 0.1,
+              width = 0.8,
+              height = 0.6,
+            },
           },
         },
       }

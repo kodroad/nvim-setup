@@ -30,6 +30,10 @@ M.override = {
     fg = "NONE",
     bg = "#660000",
   },
+  FloatBorder = {
+    fg = "#454545",
+    bg = "NONE",
+  },
 }
 
 ---@type HLTable
