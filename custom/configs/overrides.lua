@@ -8,6 +8,7 @@ M.treesitter = {
 		"markdown_inline",
 		"go",
 		"yaml",
+		"comment", -- to highlight TODO in comments
 	},
 	indent = {
 		enable = true,
