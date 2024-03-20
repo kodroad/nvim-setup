@@ -23,9 +23,10 @@ CMD ["/bin/sh"]
 #  1. podman build . -t neovim-go-ready:1.0
 #  2. podman run --name neovim-container -it --rm neovim-go-ready:1.0
 #  3. nvim, wait everything installs, quit nvim
-#  4. rm -rf /root/.cache/go-build
-#  5. rm -r /go/pkg/mod/*
-#  6. apk del build-base wget curl
+#  4. run nvim again to ensure treesitter parsers installed (sometimes they don't install on first nvim run)
+#  5. rm -rf /root/.cache/go-build
+#  6. rm -r /go/pkg/mod/*
+#  7. apk del build-base wget curl
 #  8. rm /usr/bin/wget
 #  9. podman commit neovim-container neovim-go-ready:1.0
 # 10. podman save --compress --format oci-dir -o neovim-go-ready neovim-go-ready:1.0
