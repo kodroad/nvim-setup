@@ -7,6 +7,7 @@ M.treesitter = {
 		"markdown",
 		"markdown_inline",
 		"go",
+		"yaml",
 	},
 	indent = {
 		enable = true,
@@ -22,6 +23,7 @@ M.mason = {
 		"goimports",
 		"gofumpt",
 		"golangci-lint",
+		"yamlfmt",
 	},
 }
 

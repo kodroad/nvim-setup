@@ -21,6 +21,16 @@ opt.diffopt:append("iwhite")
 opt.fillchars:append({ diff = " " })
 opt.autoread = true
 
+-- Go indent settings
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "go" },
+	callback = function()
+		vim.opt.tabstop = 4
+		vim.opt.shiftwidth = 4
+		vim.opt.expandtab = false
+	end,
+})
+
 -- YAML indent settings
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "yaml" },
@@ -67,8 +77,10 @@ local function mod_hl(hl_name, opts)
 	end
 end
 
+local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
+
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
-	group = vim.api.nvim_create_augroup("Color", {}),
+	group = autocmd_group,
 	pattern = "*",
 	callback = function()
 		mod_hl("DiffviewDiffAddAsDelete", { fg = "NONE", bg = "#660000" })
@@ -79,4 +91,14 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI", "FocusGained" }, {
 	command = "if mode() != 'c' | checktime | endif",
 	pattern = { "*" },
+})
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	group = autocmd_group,
+	pattern = { "*.yaml", "*.yml" },
+	desc = "Auto-format YAML files after saving",
+	callback = function()
+		local fileName = vim.api.nvim_buf_get_name(0)
+		vim.cmd(":silent !yamlfmt " .. fileName)
+	end,
 })
