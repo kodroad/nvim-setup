@@ -20,6 +20,10 @@ opt.wrap = false
 opt.diffopt:append("iwhite")
 opt.fillchars:append({ diff = " " })
 opt.autoread = true
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldenable = false -- don't fold everything on startup
+opt.foldnestmax = 1
 
 -- Go indent settings
 vim.api.nvim_create_autocmd("FileType", {
