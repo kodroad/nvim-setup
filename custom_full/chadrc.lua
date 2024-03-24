@@ -12,6 +12,10 @@ M.ui = {
   hl_add = highlights.add,
 
   telescope = { style = "bordered" }, -- borderless / bordered
+
+  statusline = {
+    separator_style = "round",
+  },
 }
 
 M.plugins = "custom.plugins"

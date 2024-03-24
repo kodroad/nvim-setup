@@ -168,6 +168,32 @@ local plugins = {
 		end,
 	},
 
+	{
+		"petertriho/nvim-scrollbar",
+		lazy = false,
+		dependencies = {
+			"lewis6991/gitsigns.nvim",
+		},
+		config = function()
+			require("scrollbar").setup({
+				max_lines = 5000,
+				handlers = {
+					cursor = false,
+					gitsigns = true,
+					diagnostic = true,
+				},
+				marks = {
+					Hint = { text = { "💡" } },
+					Warn = { text = { "⚡" } },
+					Error = { text = { "🔴" } },
+					GitAdd = { color = "green" },
+					GitChange = { color = "orange" },
+					GitDelete = { color = "red" },
+				},
+			})
+		end,
+	},
+
 	-- To make a plugin not be loaded
 	-- {
 	--   "NvChad/nvim-colorizer.lua",
