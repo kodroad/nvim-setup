@@ -185,7 +185,7 @@ local plugins = {
         marks = {
           Hint = { text = { "💡" } },
           Warn = { text = { "⚡" } },
-          Error = { text = { "🔴" } },
+          Error = { text = { "■", color = "red" } },
           GitAdd = { color = "green" },
           GitChange = { color = "orange" },
           GitDelete = { color = "red" },
