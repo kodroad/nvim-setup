@@ -1,14 +1,19 @@
 FROM alpine:3.19
 
 RUN apk update && \
-    apk add make openssh git wget curl go build-base unzip gzip ripgrep neovim
+    apk add make openssh git wget curl build-base unzip gzip ripgrep neovim
+
+RUN wget https://golang.org/dl/go1.22.2.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz && \
+    rm go1.22.2.linux-amd64.tar.gz
 
 # NvChad
 RUN git clone -b v2.0 https://github.com/NvChad/NvChad /root/.config/nvim --depth 1
 COPY custom /root/.config/nvim/lua/custom
 
 # Go
-ENV GOROOT /usr/lib/go
+ENV GOROOT /usr/local/go
+ENV PATH /usr/local/go/bin:$PATH
 ENV GOPATH /go
 ENV PATH /go/bin:$PATH
 RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
