@@ -3,6 +3,7 @@ FROM alpine:3.19
 RUN apk update && \
     apk add make openssh git wget curl build-base unzip gzip ripgrep neovim
 
+# Go compiler
 RUN wget https://golang.org/dl/go1.22.2.linux-amd64.tar.gz
 RUN tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz && \
     rm go1.22.2.linux-amd64.tar.gz
@@ -11,7 +12,7 @@ RUN tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz && \
 RUN git clone -b v2.0 https://github.com/NvChad/NvChad /root/.config/nvim --depth 1
 COPY custom /root/.config/nvim/lua/custom
 
-# Go
+# Go env
 ENV GOROOT /usr/local/go
 ENV PATH /usr/local/go/bin:$PATH
 ENV GOPATH /go
@@ -24,7 +25,7 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
 
 CMD ["/bin/sh"]
 
-#  Image build process:
+#  Manual image build steps:
 #  1. podman build . -t neovim-go-ready:1.0
 #  2. podman run --name neovim-container -it --rm neovim-go-ready:1.0
 #  3. nvim, wait everything installs, quit nvim
