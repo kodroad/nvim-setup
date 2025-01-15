@@ -71,6 +71,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+vim.api.nvim_set_hl(0, "GitSignsAdd", { link = "DiffAdd" })
+vim.api.nvim_set_hl(0, "GitSignsChange", { link = "DiffText" })
+vim.api.nvim_set_hl(0, "GitSignsDelete", { link = "DiffDelete" })
+vim.api.nvim_set_hl(0, "GitSignsTopDelete", { link = "DiffDelete" })
+vim.api.nvim_set_hl(0, "GitSignsChangeDelete", { link = "DiffDelete" })
+
 local function mod_hl(hl_name, opts)
 	local is_ok, hl_def = pcall(vim.api.nvim_get_hl_by_name, hl_name, true)
 	if is_ok then

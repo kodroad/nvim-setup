@@ -50,11 +50,11 @@ M.nvimtree = {
 
 M.gitsigns = {
 	signs = {
-		add = { hl = "DiffAdd", text = " " },
-		change = { hl = "DiffText", text = " " },
-		delete = { hl = "DiffDelete", text = " " },
-		topdelete = { hl = "DiffDelete", text = " " },
-		changedelete = { hl = "DiffDelete", text = " " },
+		add = { text = " " },
+		change = { text = " " },
+		delete = { text = " " },
+		topdelete = { text = " " },
+		changedelete = { text = " " },
 	},
 }
 
