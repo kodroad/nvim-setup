@@ -10,7 +10,7 @@ RUN tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz && \
 
 # NvChad
 RUN git clone -b v2.0 https://github.com/NvChad/NvChad /root/.config/nvim --depth 1
-COPY custom /root/.config/nvim/lua/custom
+COPY custom_go_ready /root/.config/nvim/lua/custom
 
 # Go env
 ENV GOROOT /usr/local/go
